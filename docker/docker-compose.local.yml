@@ -1,0 +1,33 @@
+version: "3.7"
+
+services:
+  &db-service db_store_ms:
+    container_name: *db-service
+    hostname: *db-service
+    image: postgres:latest
+#    ports:
+#      - "5432:5432"
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data/store_ms
+      POSTGRES_PORT: 5432
+    volumes:
+      - pg_store_data:/var/lib/postgresql/data:rw
+  &pgadmin-service pgadmin_ms:
+    container_name: *pgadmin-service
+    hostname: *pgadmin-service
+    image: dpage/pgadmin4:latest
+    ports:
+      - "82:80"
+    depends_on:
+      - *db-service
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: password
+volumes:
+  pg_store_data:
+  pgadmin:
