@@ -28,6 +28,41 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: user@gmail.com
       PGADMIN_DEFAULT_PASSWORD: password
+  &gateway-service gateway:
+    container_name: *gateway-service
+    hostname: *gateway-service
+    build:
+      context: ../gateway
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    working_dir: /home/app
+    volumes:
+      - ../gateway:/home/app:rw
+    ports:
+      - 3000:3000
+    user: 1000:1000
+  &products-service products-service:
+    container_name: *products-service
+    hostname: *products-service
+    build:
+      context: ../products-service
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    working_dir: /home/app
+    volumes:
+      - ../products-service:/home/app:rw
+    ports:
+      - 3001:3000
+    user: 1000:1000
+  &proxy-service proxy:
+    container_name: *proxy-service
+    hostname: *proxy-service
+    build:
+      context: ../proxy
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+
 volumes:
   pg_store_data:
   pgadmin:
