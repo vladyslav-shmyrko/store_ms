@@ -52,7 +52,20 @@ services:
     volumes:
       - ../products-service:/home/app:rw
     ports:
-      - 3001:3000
+      - 3001:3001
+    user: 1000:1000
+  &customers-service customers-service:
+    container_name: *customers-service
+    hostname: *customers-service
+    build:
+      context: ../customers-service
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    working_dir: /home/app
+    volumes:
+      - ../customers-service:/home/app:rw
+    ports:
+      - 3002:3002
     user: 1000:1000
   &proxy-service proxy:
     container_name: *proxy-service
