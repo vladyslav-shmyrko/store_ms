@@ -3,8 +3,8 @@ const express = require('express');
 
 const app = express();
 
-app.get('*', (req, res) => {
-  res.status(200).json({message: 'Hello from Customers'});
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Hello from Customers' });
 });
 
 app.listen(process.env.PORT, () => {

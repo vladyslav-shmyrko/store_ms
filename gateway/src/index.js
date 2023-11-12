@@ -8,10 +8,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/products', proxy('localhost:3001'));
+app.use('/products', proxy('products-service:3001'));
+app.use('/customers', proxy('customers-service:3002'));
 
 app.get('/', (req, res) => {
-  res.status(200).json({message: 'Hello from Gateway'});
+  res.status(200).json({ message: 'Hello from Gateway' });
 });
 
 app.listen(process.env.PORT, () => {
