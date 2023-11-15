@@ -6,7 +6,8 @@
   "type": "commonjs",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "lint": "npx eslint ./src"
+    "lint": "npx eslint . && prettier --check \"**/*.js\"",
+    "fmt": "prettier --write \"**/*.js\""
   },
   "keywords": [],
   "author": "",
