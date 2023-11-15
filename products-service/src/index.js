@@ -8,5 +8,7 @@ app.get('/', (req, res, next) => {
 });
 
 app.listen(process.env.PORT, () => {
-  console.log(`[Products]: server is running at http://localhost:${process.env.PORT}`);
+  console.log(
+    `[Products]: server is running at http://localhost:${process.env.PORT}`,
+  );
 });
