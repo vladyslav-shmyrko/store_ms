@@ -8,11 +8,11 @@ services:
 #    ports:
 #      - "5432:5432"
     environment:
-      POSTGRES_DB: test
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       PGDATA: /var/lib/postgresql/data/store_ms
-      POSTGRES_PORT: 5432
+      POSTGRES_PORT: ${POSTGRES_PORT}
     volumes:
       - pg_store_data:/var/lib/postgresql/data:rw
   &pgadmin-service pgadmin_ms:
@@ -39,7 +39,7 @@ services:
     volumes:
       - ../gateway:/home/app:rw
     ports:
-      - 3000:3000
+      - "3000:3000"
     user: 1000:1000
   &products-service products-service:
     container_name: *products-service
@@ -52,7 +52,7 @@ services:
     volumes:
       - ../products-service:/home/app:rw
     ports:
-      - 3001:3001
+      - "3001:3001"
     user: 1000:1000
   &customers-service customers-service:
     container_name: *customers-service
@@ -65,7 +65,7 @@ services:
     volumes:
       - ../customers-service:/home/app:rw
     ports:
-      - 3002:3002
+      - "3002:3002"
     user: 1000:1000
   &proxy-service proxy:
     container_name: *proxy-service
@@ -74,7 +74,7 @@ services:
       context: ../proxy
       dockerfile: Dockerfile
     ports:
-      - 80:80
+      - "80:80"
 
 volumes:
   pg_store_data:
