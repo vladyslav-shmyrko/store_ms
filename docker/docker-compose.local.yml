@@ -5,14 +5,13 @@ services:
     container_name: *db-service
     hostname: *db-service
     image: postgres:latest
-#    ports:
-#      - "5432:5432"
+    ports:
+      - "${POSTGRES_PORT}:5432"
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       PGDATA: /var/lib/postgresql/data/store_ms
-      POSTGRES_PORT: ${POSTGRES_PORT}
     volumes:
       - pg_store_data:/var/lib/postgresql/data:rw
   &pgadmin-service pgadmin_ms:
@@ -75,6 +74,19 @@ services:
       dockerfile: Dockerfile
     ports:
       - "80:80"
+  &auth-service auth-service:
+    container_name: *auth-service
+    hostname: *auth-service
+    build:
+      context: ../auth-service
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    working_dir: /home/app
+    volumes:
+      - ../auth-service:/home/app:rw
+    ports:
+      - "3003:3003"
+    user: 1000:1000
 
 volumes:
   pg_store_data:

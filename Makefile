@@ -32,3 +32,7 @@ shell-customer-once: ## Start bash session customer container
 	$(docker_compose_bin) $(COMPOSE_CONFIG) run --rm --user="$(CURRENT_USER_ID)" -p 3002:3002 "customers-service" bash
 shell-customer-once-dev: ## Start customer container dev mode
 	$(docker_compose_bin) $(COMPOSE_CONFIG) run --rm --user="$(CURRENT_USER_ID)" -p 3002:3002 "customers-service" npm run dev
+shell-auth-once: ## Start bash session auth container
+	$(docker_compose_bin) $(COMPOSE_CONFIG) run --rm --user="$(CURRENT_USER_ID)" -p 3003:3003 "auth-service" bash
+shell-auth-once-dev: ## Start auth container dev mode
+	$(docker_compose_bin) $(COMPOSE_CONFIG) run --rm --user="$(CURRENT_USER_ID)" -p 3003:3003 "auth-service" npm run dev
