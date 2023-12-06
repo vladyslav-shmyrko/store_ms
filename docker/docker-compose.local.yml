@@ -19,14 +19,14 @@ services:
     hostname: *pgadmin-service
     image: dpage/pgadmin4:latest
     ports:
-      - "82:80"
+      - "${PGADMIN_PORT}:80"
     depends_on:
       - *db-service
     volumes:
       - pgadmin:/var/lib/pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: user@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
   &gateway-service gateway:
     container_name: *gateway-service
     hostname: *gateway-service
